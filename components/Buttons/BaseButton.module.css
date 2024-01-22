@@ -1,0 +1,11 @@
+.btn {
+  @apply inline-block px-6 py-2.5 rounded-xl font-bold text-xl border border-solid;
+}
+
+.filled {
+  @apply bg-custom-blue text-white border-custom-blue hover:text-custom-blue hover:border-custom-blue hover:bg-transparent;
+}
+
+.outline {
+  @apply text-custom-blue border-custom-blue hover:bg-custom-blue hover:text-white hover:border-transparent;
+}
