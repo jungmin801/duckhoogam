@@ -9,3 +9,28 @@
 .outline {
   @apply text-custom-blue border-custom-blue hover:bg-custom-blue hover:text-white hover:border-transparent;
 }
+
+.iconBtn {
+  @apply w-14 h-14 rounded-xl bg-custom-gray-200;
+}
+
+.iconBtn.delete:hover {
+  background-color: #f37c4b;
+}
+
+.iconBtn.modify:hover {
+  background-color: #7071e8;
+}
+
+.iconBtn.delete:hover svg path,
+.iconBtn.modify:hover svg path {
+  fill: white;
+}
+/* 
+.iconBtn.delete:hover svg path {
+  fill: white;
+} */
+
+/* .iconBtn.modify:hover svg path {
+  fill: white;
+} */
