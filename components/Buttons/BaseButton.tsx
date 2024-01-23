@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./BaseButton.module.css";
+import styles from "./Button.module.css";
 import Link from "next/link";
 
 const BaseButton = ({
