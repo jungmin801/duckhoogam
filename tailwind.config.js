@@ -24,6 +24,10 @@ module.exports = {
           600: "#6F6F6F",
         },
       },
+      backgroundImage: {
+        arrowTop: "url('/asset/image/ArrowTop.png')",
+        arrowLeft: "url('/asset/image/ArrowLeft.png')",
+      },
     },
   },
   plugins: [],
