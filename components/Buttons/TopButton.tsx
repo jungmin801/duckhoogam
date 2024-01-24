@@ -6,7 +6,7 @@ const TopButton = () => {
   return (
     <button
       type="button"
-      className={` rounded-t-lg ${styles.moveBtn} bg-arrowTop`}
+      className={`absolute right-0 bottom-0 rounded-t-lg ${styles.moveBtn} bg-arrowTop`}
       onClick={() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
