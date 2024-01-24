@@ -168,6 +168,15 @@
     font-family: "sans-regular";
     box-sizing: border-box;
   }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: 2.5rem;
+    border: 0;
+  }
 }
 
 @layer components {
@@ -196,5 +205,11 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  .max-width {
+    width: 1224px;
+    max-width: calc(100% - 4rem);
+    margin: 0 auto;
   }
 }
