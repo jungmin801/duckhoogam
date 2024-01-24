@@ -1,5 +1,9 @@
-.btn {
+.baseBtn {
   @apply inline-block px-6 py-2.5 rounded-xl font-bold text-xl border border-solid;
+}
+
+.moveBtn {
+  @apply w-16 h-16 pt-4 bg-custom-blue text-white font-bold bg-no-repeat bg-[center_top];
 }
 
 .filled {

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Button.module.css";
+import styles from "./Buttons.module.css";
 import Link from "next/link";
 
 const BaseButton = ({
@@ -15,7 +15,9 @@ const BaseButton = ({
     return (
       <Link
         href={link}
-        className={`${styles.btn} ${isFilled ? styles.filled : styles.outline}`}
+        className={`${styles.baseBtn} ${
+          isFilled ? styles.filled : styles.outline
+        }`}
       >
         {txt}
       </Link>
@@ -24,7 +26,9 @@ const BaseButton = ({
 
   return (
     <button
-      className={`${styles.btn} ${isFilled ? styles.filled : styles.outline}`}
+      className={`${styles.baseBtn} ${
+        isFilled ? styles.filled : styles.outline
+      }`}
     >
       {txt}
     </button>

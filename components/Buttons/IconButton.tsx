@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./Button.module.css";
+import styles from "./Buttons.module.css";
 
 const DeleteIcon = () => {
   return (
