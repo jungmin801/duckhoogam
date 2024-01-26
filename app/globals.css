@@ -143,22 +143,22 @@
 
   /* 폰트 설정 */
   @font-face {
-    font-family: "sans-regular";
-    src: url("/asset/font/WantedSans-Regular.otf") format("opentype");
+    font-family: "NanumSquareNeoOTF-Rg";
+    src: url("/asset/font/NanumSquareNeoOTF-Rg.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
-    font-family: "sans-bold";
-    src: url("/asset/font/WantedSans-Bold.otf") format("opentype");
+    font-family: "NanumSquareNeoOTF-Bd";
+    src: url("/asset/font/NanumSquareNeoOTF-Bd.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
-    font-family: "sans-extraBold";
-    src: url("/asset/font/WantedSans-ExtraBold.otf") format("opentype");
+    font-family: "NanumSquareNeoOTF-Hv";
+    src: url("/asset/font/NanumSquareNeoOTF-Hv.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
   }
@@ -167,6 +167,7 @@
   body {
     font-family: "sans-regular";
     box-sizing: border-box;
+    background-color: #f9f9f9;
   }
 
   .button {
@@ -209,7 +210,7 @@
 
   .max-width {
     width: 1224px;
-    max-width: calc(100% - 4rem);
+    max-width: calc(100% - 2.5rem);
     margin: 0 auto;
   }
 }

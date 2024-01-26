@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="max-width">
-      <div className="flex items-center justify-between py-4">
+    <header className="bg-white ">
+      <div className="flex items-center justify-between py-4 max-width">
         <h1 className="text-lg font-extraBold">DuckHooGam</h1>
         <ul className="flex gap-4 ">
           <li>
