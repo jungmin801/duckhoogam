@@ -1,8 +1,9 @@
 import React from "react";
 import Badge from "./Badge";
 import AuthorInfo from "./AuthorInfo";
+import { Post } from "../../types/types";
 
-const Card = (post) => {
+const Card = (post: Post) => {
   const createdDate = new Date(post.created_at);
   const year = createdDate.getFullYear();
   const month = (createdDate.getMonth() + 1).toString().padStart(2, "0");
@@ -18,13 +19,23 @@ const Card = (post) => {
         />
       </div>
       <div className="px-6 pt-4 pb-6">
-        <Badge txt="Music" />
-        <h3 className="my-3 font-bold shorten2">{post.title}</h3>
+        <ul className="flex flex-wrap gap-1">
+          {post.category.map((item, index) => (
+            <li key={index}>
+              <Badge txt={item} />
+            </li>
+          ))}
+        </ul>
+        <h3 className="h-[calc(1.125rem*1.4*2)] my-2.5 text-lg font-bold shorten2">
+          {post.title}
+        </h3>
         <AuthorInfo
           author={post.userName}
           createdAt={`${year}.${month}.${date}`}
         />
-        <p className="mt-4 shorten3 text-custom-gray-500">{post.content}</p>
+        <p className="h-[calc(0.875rem*1.4*3)] mt-4 text-sm shorten3 text-custom-gray-500">
+          {post.content}
+        </p>
       </div>
     </article>
   );

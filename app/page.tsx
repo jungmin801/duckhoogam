@@ -1,10 +1,12 @@
 import { Inter } from "next/font/google";
+import { NextPage } from "next";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import HomePage from "../components/home/Home";
+
 const inter = Inter({ subsets: ["latin"] });
 
-export default async function Home() {
+const Home: NextPage = async () => {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
@@ -13,12 +15,15 @@ export default async function Home() {
   const { data: postData, error } = await supabase.from("post").select("*");
 
   if (error) {
-    return <div>{error.message}</div>;
+    console.error(error.message);
+    return;
   }
 
   return (
-    <main className="max-width ">
+    <main className="relative flex gap-6 max-width">
       <HomePage postData={postData} />
     </main>
   );
-}
+};
+
+export default Home;

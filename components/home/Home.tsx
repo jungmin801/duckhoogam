@@ -1,15 +1,23 @@
 import React from "react";
 import Card from "../common/Card";
+import SideBar from "../sideBar/SideBar";
+import { Post } from "../../types/types";
+interface PostProps {
+  postData: Post[];
+}
 
-const HomePage = ({ postData }) => {
+const HomePage = ({ postData }: PostProps) => {
   return (
-    <ul className="grid grid-cols-3 gap-4 bg-custom-gray-100">
-      {postData.map((post) => (
-        <li key={post.id}>
-          <Card {...post} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <SideBar />
+      <ul className="grid grid-cols-3 gap-6">
+        {postData.map((post) => (
+          <li key={post.id}>
+            <Card {...post} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 
