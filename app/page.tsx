@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { NextPage } from "next";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Banner from "../components/common/Banner";
