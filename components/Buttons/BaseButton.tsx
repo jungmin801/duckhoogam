@@ -15,7 +15,7 @@ const BaseButton = ({
     return (
       <Link
         href={link}
-        className={`${styles.baseBtn} ${
+        className={`inline-block px-6 py-2.5 rounded-xl font-bold text-xl border border-solid ${
           isFilled ? styles.filled : styles.outline
         }`}
       >
@@ -26,7 +26,7 @@ const BaseButton = ({
 
   return (
     <button
-      className={`${styles.baseBtn} ${
+      className={`inline-block px-6 py-2.5 rounded-xl font-bold text-xl border border-solid ${
         isFilled ? styles.filled : styles.outline
       }`}
     >
