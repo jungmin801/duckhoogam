@@ -7,3 +7,7 @@ export interface Post {
   image: string;
   category: string[];
 }
+
+export interface PostId {
+  postId: string;
+}
