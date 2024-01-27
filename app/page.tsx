@@ -1,12 +1,12 @@
 import { Inter } from "next/font/google";
-import { NextPage } from "next";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import Banner from "../components/common/Banner";
 import HomePage from "../components/home/Home";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const Home: NextPage = async () => {
+const Home = async () => {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
@@ -20,9 +20,12 @@ const Home: NextPage = async () => {
   }
 
   return (
-    <main className="relative flex gap-6 max-width">
-      <HomePage postData={postData} />
-    </main>
+    <>
+      <Banner type={"home"} />
+      <main className="relative flex gap-6 max-width">
+        <HomePage postData={postData} />
+      </main>
+    </>
   );
 };
 
