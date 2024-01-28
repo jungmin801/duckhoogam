@@ -165,9 +165,10 @@
 
   /* 기본 스타일 설정 */
   body {
-    font-family: "sans-regular";
+    font-family: "NanumSquareNeoOTF-Rg";
     box-sizing: border-box;
     background-color: #f9f9f9;
+    color: #1d1d1d;
   }
 
   .button {
