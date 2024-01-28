@@ -7,7 +7,7 @@ import ModifyIcon from "../../public/asset/image/icon-modify.svg";
 const IconButton = ({ type }: { type: string }) => {
   return (
     <button
-      className={`w-14 h-14 rounded-xl bg-custom-gray-200 group duration-300 ease-in ${
+      className={`w-12 h-12 rounded-xl bg-custom-gray-200 group duration-300 ease-in ${
         type === "delete" ? "hover:bg-custom-red" : "hover:bg-custom-blue"
       }`}
     >
