@@ -3,23 +3,21 @@ import styles from "./Buttons.module.css";
 import Link from "next/link";
 
 interface BaseButtonProps {
-  link: string | null;
+  isSubmit?: boolean;
+  link?: string;
   isFilled: boolean;
   txt: string;
 }
 
-const BaseButton = ({ link, isFilled, txt }: BaseButtonProps) => {
-  const filledStyle =
-    "bg-custom-blue text-white border-custom-blue hover:text-custom-blue hover:border-custom-blue hover:bg-transparent";
-
-  const outlineStyle =
-    "text-custom-blue border-custom-blue hover:bg-custom-blue hover:text-white hover:border-transparent;";
+const BaseButton = ({ isSubmit, link, isFilled, txt }: BaseButtonProps) => {
+  const filledStyle = "bg-custom-blue text-white border-custom-blue ";
+  const outlineStyle = "text-custom-blue border-custom-blue ";
 
   if (link) {
     return (
       <Link
         href={link}
-        className={`inline-block px-6 py-2.5 rounded-xl font-bold text-xl border border-solid ${
+        className={`inline-block px-6 py-2.5 rounded-xl font-bold border border-solid ${
           isFilled ? filledStyle : outlineStyle
         }`}
       >
@@ -30,7 +28,8 @@ const BaseButton = ({ link, isFilled, txt }: BaseButtonProps) => {
 
   return (
     <button
-      className={`inline-block px-6 py-2.5 rounded-xl font-bold text-xl border border-solid ${
+      type={isSubmit ? "submit" : "button"}
+      className={`inline-block px-6 py-2.5 rounded-xl font-bold border border-solid ${
         isFilled ? filledStyle : outlineStyle
       }`}
     >
