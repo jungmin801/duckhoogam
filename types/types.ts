@@ -11,3 +11,12 @@ export interface Post {
 export interface PostId {
   postId: string;
 }
+
+export interface Category {
+  id: string;
+  name: string;
+}
+
+export interface Categories {
+  categories: Category[] | null;
+}

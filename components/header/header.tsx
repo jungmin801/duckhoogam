@@ -1,5 +1,4 @@
 import React from "react";
-import BaseButton from "../buttons/BaseButton";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +10,7 @@ const Header = () => {
         <ul className="flex gap-4 ">
           <li>
             <Link
-              href={"/"}
+              href={"/post/new"}
               className="px-5 py-2 font-bold text-white rounded-lg bg-custom-blue button"
             >
               <Image
