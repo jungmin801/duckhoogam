@@ -1,0 +1,7 @@
+.quill {
+  height: 100vh;
+}
+
+.ql-container {
+  height: calc(100% - 42px);
+}
