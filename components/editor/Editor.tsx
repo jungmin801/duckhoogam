@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { supabase } from "../../utils/supabaseClient";
 import "react-quill/dist/quill.snow.css";
 import "./Editor.css";
+import { generateNewFileName } from "../../utils/newFileName";
 
 interface SetContentProps {
   setContent: Dispatch<SetStateAction<string>>;
@@ -21,23 +22,8 @@ const ReactQuill = dynamic(
   { ssr: false, loading: () => <p>Loading ...</p> }
 );
 
-// 동일한 파일명의 파일을 업로드 하기 위해 파일명 뒤에 현재시각을 붙여 새로운 파일명을 만들어준다.
-const generateNewFileName = (fileName: string) => {
-  const date = new Date();
-  const uniqueString = date.toISOString().replace(/[^0-9]/g, "");
-
-  const fileExtension = fileName.split(".").pop();
-  const newFileName = `${fileName
-    .split(".")
-    .slice(0, -1)
-    .join(".")}_${uniqueString}.${fileExtension}`;
-
-  return newFileName;
-};
-
 const Editor = ({ setContent }: SetContentProps) => {
-  const baseURL =
-    "https://zzgcgreplpqpwwvvzjzk.supabase.co/storage/v1/object/public/images/";
+  const baseURL = process.env.Image_base_url;
 
   const quillRef = useRef();
   const handleChange = (value: string) => {
@@ -72,7 +58,7 @@ const Editor = ({ setContent }: SetContentProps) => {
             throw new Error(res.error.message);
           }
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     });
