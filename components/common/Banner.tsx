@@ -14,7 +14,7 @@ const Banner = ({ type }: { type: string }) => {
 
   const DetailPostContent = () => {
     return (
-      <p className="relative pl-10 text-5xl leading-tight font-extraBold">
+      <p className="relative pl-10 text-5xl leading-tight font-custom-hv">
         {month}
         <em className="text-[2em] block mb-[-0.15em]">{day}</em>
         {weekday}
@@ -28,7 +28,7 @@ const Banner = ({ type }: { type: string }) => {
         <p className="relative text-center py-2.5 tracking-widest border-y border-solid border-white">
           나만의 덕질 일기
         </p>
-        <p className="relative my-4 text-6xl text-center font-extraBold">
+        <p className="relative my-4 text-6xl text-center font-custom-hv">
           덕후감
         </p>
         <p className="relative px-2 text-xs break-all">

@@ -6,12 +6,12 @@ const Header = () => {
   return (
     <header className="bg-white ">
       <div className="flex items-center justify-between py-4 max-width">
-        <h1 className="text-lg font-extraBold">DuckHooGam</h1>
+        <h1 className="text-lg font-custom-hv">DuckHooGam</h1>
         <ul className="flex gap-4 ">
           <li>
             <Link
               href={"/post/new"}
-              className="px-5 py-2 font-bold text-white rounded-lg bg-custom-blue button"
+              className="px-5 py-2 text-white rounded-lg font-custom-bd bg-custom-blue button"
             >
               <Image
                 src={"/asset/image/modify-white.svg"}
@@ -23,7 +23,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <button className="px-3 font-bold button">
+            <button className="px-3 font-custom-bd button">
               <Image
                 src="/asset/image/logout.svg"
                 alt=""

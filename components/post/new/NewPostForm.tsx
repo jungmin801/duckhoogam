@@ -77,7 +77,7 @@ const NewPostForm = ({ categories }: Categories) => {
       <div className="relative">
         <input
           type="text"
-          className={`w-full py-2 text-3xl font-bold border-b focus:outline-none ${
+          className={`w-full py-2 text-3xl font-custom-bd border-b focus:outline-none ${
             errors.titleError && "border-custom-red"
           }`}
           placeholder="제목을 입력하세요"
@@ -90,7 +90,7 @@ const NewPostForm = ({ categories }: Categories) => {
         )}
       </div>
       <div className={`relative flex content-between gap-10 py-1 my-8 `}>
-        <strong className={`font-bold shrink-0`}>카테고리</strong>
+        <strong className={`font-custom-bd shrink-0`}>카테고리</strong>
         <Select
           categories={categories}
           checkItems={checkItems}

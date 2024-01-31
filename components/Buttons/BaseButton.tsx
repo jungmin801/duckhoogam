@@ -23,7 +23,7 @@ const BaseButton = ({
     return (
       <Link
         href={link}
-        className={`inline-block px-6 py-2.5 rounded-xl font-bold border border-solid ${width} ${
+        className={`inline-block px-6 py-2.5 rounded-xl font-custom-bd border border-solid ${width} ${
           isFilled ? filledStyle : outlineStyle
         }`}
       >
@@ -35,7 +35,7 @@ const BaseButton = ({
   return (
     <button
       type={isSubmit ? "submit" : "button"}
-      className={`inline-block px-6 py-2.5 rounded-xl font-bold border border-solid ${width} ${
+      className={`inline-block px-6 py-2.5 rounded-xl font-custom-bd border border-solid ${width} ${
         isFilled ? filledStyle : outlineStyle
       }`}
     >

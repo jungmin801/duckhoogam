@@ -36,7 +36,7 @@ const PostContents = ({ data }: PostList) => {
         ))}
       </ul>
       <div className="flex items-end justify-between gap-2 mb-4">
-        <h2 className="text-[2rem] font-bold">{postData.title}</h2>
+        <h2 className="text-[2rem] font-custom-bd">{postData.title}</h2>
         <LikeButton />
       </div>
       <hr className="my-8" />
