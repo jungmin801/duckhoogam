@@ -2,25 +2,37 @@
 import React from "react";
 import BaseButton from "../../components/buttons/BaseButton";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
-type Inputs = {
+type FormValues = {
   email: string;
   password: string;
 };
 
 const SignUp = () => {
+  const router = useRouter();
   const defaultStyle =
     "block w-full py-3 border-b border-solid border-custom-gray-300 focus:outline-none font-regular";
   const errorStyle = "border-custom-red";
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<FormValues>();
 
-  const submitData = () => {
-    console.log("제출");
+  const submitData = async (data: FormValues) => {
+    await fetch("/api/user", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res) {
+          router.push("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <main className="flex items-center max-width h-svh">
