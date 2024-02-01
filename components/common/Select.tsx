@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Category, Categories } from "../../types/types";
+import { useForm, useController } from "react-hook-form";
 
 interface CheckItemsProps {
   checkItems: string[];
@@ -8,35 +9,38 @@ interface CheckItemsProps {
 
 interface SelectProps extends Categories, CheckItemsProps {}
 
-const Select = ({ categories, checkItems, setCheckItems }: SelectProps) => {
+const Select = ({ categories, control, name, rules }) => {
+  const {
+    field,
+    fieldState: { error },
+  } = useController({ control, name, rules });
+
+  const [value, setValue] = useState(field.value || []);
   const defaultStyle =
     "px-2.5 py-2 text-xs text-center rounded-full w-fit border border-solid border-custom-gray-300 whitespace-nowrap inline-block";
   const checkedStyle =
     "text-white bg-custom-blue border border-solid border-custom-blue";
 
-  // 체크여부에 따라 체크박스 배열을 업데이트한다.
-  const handleCheckBox = (cateId: string) => {
-    setCheckItems((prevCheckItems) =>
-      prevCheckItems.includes(cateId)
-        ? prevCheckItems.filter((id) => id !== cateId)
-        : [...prevCheckItems, cateId]
-    );
-  };
-
   return (
-    <ul className="flex flex-wrap gap-2">
-      {categories?.map((category: Category) => (
+    <ul className="flex flex-wrap gap-2 py-3">
+      {categories?.map((category: Category, index: number) => (
         <li key={category.id}>
           <label
             className={`${defaultStyle} ${
-              checkItems.includes(category.id) && checkedStyle
+              value.includes(category.id) && checkedStyle
             }`}
           >
             <input
               type="checkbox"
               className="hidden"
-              checked={checkItems.includes(category.id)}
-              onChange={() => handleCheckBox(category.id)}
+              value={category.name}
+              checked={value.includes(category.id)}
+              onChange={(e) => {
+                const valueCopy = [...value];
+                valueCopy[index] = e.target.checked ? category.id : null;
+                field.onChange(valueCopy);
+                setValue(valueCopy);
+              }}
             />
             {category.name}
           </label>
