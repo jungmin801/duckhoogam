@@ -19,9 +19,9 @@ export async function POST(request: Request) {
     if (error) {
       throw new Error(error.message);
     } else {
-      return NextResponse.redirect(
-        new URL(`/profile/${accountName}`, request.url)
-      );
+      return NextResponse.json({
+        data: userData.user,
+      });
     }
   } catch (error) {
     NextResponse.json({
