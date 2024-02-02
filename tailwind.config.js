@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        regular: ["NanumSquareNeoOTF-Rg", "sans-serif"],
-        bold: ["NanumSquareNeoOTF-Bd", "sans-serif"],
-        extraBold: ["NanumSquareNeoOTF-Hv", "sans-serif"],
+        "custom-rg": ["NanumSquareNeoOTF-Rg", "sans-serif"],
+        "custom-bd": ["NanumSquareNeoOTF-Bd", "sans-serif"],
+        "custom-hv": ["NanumSquareNeoOTF-Hv", "sans-serif"],
       },
       colors: {
         "custom-blue": "#7071E8",

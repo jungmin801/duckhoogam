@@ -7,7 +7,7 @@ const BackButton = () => {
   return (
     <button
       type="button"
-      className="w-16 h-16 pt-4 font-bold text-white bg-center bg-no-repeat rounded-r-lg bg-custom-gray-200 bg-arrowLeft"
+      className="w-16 h-16 pt-4 text-white bg-center bg-no-repeat rounded-r-lg font-custom-bd bg-custom-gray-200 bg-arrowLeft"
       onClick={() => {
         router.back();
       }}

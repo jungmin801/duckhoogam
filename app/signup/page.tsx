@@ -3,8 +3,10 @@ import React from "react";
 import BaseButton from "../../components/buttons/BaseButton";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../utils/supabaseClient";
 
 type FormValues = {
+  userName: string;
   email: string;
   password: string;
 };
@@ -12,7 +14,7 @@ type FormValues = {
 const SignUp = () => {
   const router = useRouter();
   const defaultStyle =
-    "block w-full py-3 border-b border-solid border-custom-gray-300 focus:outline-none font-regular";
+    "block w-full py-3 border-b border-solid border-custom-gray-300 focus:outline-none font-custom-rg";
   const errorStyle = "border-custom-red";
   const {
     register,
@@ -21,28 +23,37 @@ const SignUp = () => {
   } = useForm<FormValues>();
 
   const submitData = async (data: FormValues) => {
-    await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (res) {
-          router.push("/");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+    try {
+      const split = data.email.split("@");
+      const accountName = split[0];
+      const { data: userData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            accountName: accountName,
+          },
+        },
       });
+
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        router.push(`/profile/${accountName}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <main className="flex items-center max-width h-svh">
       <div className="relative w-1/2 max-w-full p-20 m-auto bg-white min-h-[500px] shadow-xl">
-        <h2 className="mb-10 text-2xl text-center font-extraBold">회원가입</h2>
+        <h2 className="mb-10 text-2xl text-center font-custom-hv">회원가입</h2>
         <form
           onSubmit={handleSubmit(submitData)}
           className="flex flex-col gap-4"
         >
-          <label className="block w-full text-sm font-bold">
+          <label className="block w-full text-sm font-custom-bd">
             이메일
             <input
               type="email"
@@ -60,7 +71,7 @@ const SignUp = () => {
           {errors.email && (
             <p className="text-xs text-custom-red">{errors.email.message}</p>
           )}
-          <label className="block w-full text-sm font-bold">
+          <label className="block w-full text-sm font-custom-bd">
             비밀번호
             <input
               type="password"
