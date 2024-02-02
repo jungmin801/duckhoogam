@@ -3,6 +3,7 @@ import React from "react";
 import BaseButton from "../../components/buttons/BaseButton";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../utils/supabaseClient";
 
 type FormValues = {
   userName: string;
@@ -22,20 +23,27 @@ const SignUp = () => {
   } = useForm<FormValues>();
 
   const submitData = async (data: FormValues) => {
-    await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        const accountName: string = response.data.user_metadata.accountName;
-        router.push(`/profile/${accountName}`);
-      })
-      .catch((error) => {
-        console.error(error);
+    try {
+      const split = data.email.split("@");
+      const accountName = split[0];
+      const { data: userData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            accountName: accountName,
+          },
+        },
       });
+
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        router.push(`/profile/${accountName}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <main className="flex items-center max-width h-svh">

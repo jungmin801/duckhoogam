@@ -20,3 +20,7 @@ export interface Category {
 export interface Categories {
   categories: Category[] | null;
 }
+
+export interface AccountName {
+  accountName: string;
+}
