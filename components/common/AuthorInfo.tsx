@@ -4,19 +4,20 @@ import Image from "next/image";
 const AuthorInfo = ({
   author,
   createdAt,
+  profileImage,
 }: {
   author: string;
   createdAt: string;
+  profileImage: string;
 }) => {
+  const ImgBaseURL = process.env.NEXT_PUBLIC_IMAGE_BASEURL;
   return (
     <div className="flex items-center gap-4 text-sm text-custom-gray-500">
       <div className="flex items-center gap-1.5">
-        <Image
-          src={"/asset/image/profile.jpg"}
+        <img
+          src={ImgBaseURL + profileImage}
           alt=""
-          width={30}
-          height={30}
-          className="aspect-square object-cover rounded-full"
+          className="object-cover w-8 h-8 rounded-full aspect-square aspect-auto"
         />
         {author}
       </div>
