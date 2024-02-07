@@ -14,7 +14,8 @@ const Home = async () => {
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
   });
-  const { data: postData, error } = await supabase.from("post").select("*");
+
+  const { data: postData, error } = await supabase.rpc("get_posts");
 
   if (error) {
     console.error(error.message);
@@ -27,13 +28,14 @@ const Home = async () => {
       <main className="relative flex gap-6 max-width">
         <SideBar />
         <ul className="grid grid-cols-3 gap-6">
-          {postData.map((post) => (
-            <li key={post.id}>
-              <Link href={`/post/${post.id}`}>
-                <Card {...post} />
-              </Link>
-            </li>
-          ))}
+          {postData.length > 0 &&
+            postData.map((post) => (
+              <li key={post.id}>
+                <Link href={`/post/${post.id}`}>
+                  <Card {...post} />
+                </Link>
+              </li>
+            ))}
         </ul>
       </main>
     </>
