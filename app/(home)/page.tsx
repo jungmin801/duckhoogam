@@ -3,7 +3,7 @@ import Banner from "../../components/common/Banner";
 import SideBar from "../../components/sideBar/SideBar";
 import Link from "next/link";
 import Card from "../../components/common/Card";
-import { headers, cookies } from "next/headers";
+import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,17 +16,27 @@ const Home = async () => {
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
   });
+  let userProfile;
 
   const { data: posts } = await supabase.rpc("get_posts");
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (user) {
+    const { data: userData } = await supabase
+      .from("user")
+      .select("*")
+      .eq("id", user.id);
+
+    userProfile = userData?.[0];
+  }
+
   return (
     <>
       <Banner type={"home"} />
       <main className="relative flex gap-6 max-width">
-        {user?.id && <SideBar />}
+        {user?.id && <SideBar profile={userProfile} />}
         <ul className={"grid gap-6 grid-cols-3"}>
           {posts.length > 0 &&
             posts.map((post) => (

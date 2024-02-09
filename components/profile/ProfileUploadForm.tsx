@@ -85,6 +85,7 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
           image: imgPath,
           categories: submitData.categories,
           id: userID,
+          intro: submitData.intro,
         }),
       });
 
@@ -110,12 +111,7 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
         />
         <label className="absolute bottom-0 right-0 inline-flex items-center justify-center w-8 h-8 p-1 rounded-full cursor-pointer bg-custom-blue">
           <ImgIcon className="w-5 h-5" />
-          <input
-            type="file"
-            {...register("image")}
-            // onChange={handleUploadImage}
-            className="hidden"
-          />
+          <input type="file" {...register("image")} className="hidden" />
         </label>
       </div>
       <div>
@@ -136,7 +132,22 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
           <p className="text-xs text-custom-red">{errors.userName.message}</p>
         )}
       </div>
-
+      <div>
+        <label className="block w-full pb-3 text-sm font-custom-bd">
+          자기소개
+          <input
+            type="text"
+            className={`${defaultStyle} ${errors.intro && errorStyle}`}
+            placeholder="자기소개를 입력해주세요."
+            {...register("intro", {
+              required: "자기소개를 입력해주세요.",
+            })}
+          />
+        </label>
+        {errors.intro && (
+          <p className="text-xs text-custom-red">{errors.intro.message}</p>
+        )}
+      </div>
       <div className="relative py-4">
         <strong className={`block font-custom-bd`}>
           관심 분야를 선택해주세요.

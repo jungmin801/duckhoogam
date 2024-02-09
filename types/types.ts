@@ -24,3 +24,11 @@ export interface Categories {
 export interface AccountName {
   accountName: string;
 }
+
+export interface Profile {
+  id: string;
+  image: string;
+  categories: string[];
+  userName: string;
+  intro: string;
+}
