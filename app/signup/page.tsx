@@ -3,7 +3,7 @@ import React from "react";
 import BaseButton from "../../components/buttons/BaseButton";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../utils/supabaseClient";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type FormValues = {
   userName: string;
@@ -21,6 +21,8 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+
+  const supabase = createClientComponentClient();
 
   const submitData = async (data: FormValues) => {
     try {

@@ -19,7 +19,7 @@ interface PostList {
   data: Post[];
 }
 
-const PostContents = ({ data }: PostList) => {
+const PostContents = async ({ data }: PostList) => {
   const postData = data[0];
   const formattedDate = formateDate(postData.created_at);
 

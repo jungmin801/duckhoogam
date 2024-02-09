@@ -2,7 +2,6 @@
 import React from "react";
 import BaseButton from "../../components/buttons/BaseButton";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { supabase } from "../../utils/supabaseClient";
 import { useRouter } from "next/navigation";
 
 type FormValues = {
@@ -23,22 +22,13 @@ const Login = () => {
 
   const submitData = async (data) => {
     try {
-      const { data: userData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
+      const response = await fetch("/api/auth/signIn", {
+        method: "POST",
+        body: JSON.stringify(data),
       });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      if (userData) {
-        const { data, error } = await supabase.auth.setSession({
-          access_token: userData.session.access_token,
-          refresh_token: userData.session.refresh_token,
-        });
-
+      if (response.ok) {
         router.push("/");
+        router.refresh();
       }
     } catch (error) {
       console.error(error);
