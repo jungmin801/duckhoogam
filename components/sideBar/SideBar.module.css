@@ -1,0 +1,7 @@
+.title {
+  @apply mb-5 text-xs font-bold tracking-widest underline uppercase;
+}
+
+.flex-basis {
+  flex-basis: calc((100% - 2.4rem * 3) / 4);
+}
