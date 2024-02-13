@@ -1,11 +1,11 @@
 export interface Post {
-  id: number;
+  post_id: number;
   created_at: string;
   title: string;
   content: string;
-  userName: string;
-  image: string;
-  category: string[];
+  user_name: string;
+  thumbnail: string;
+  category_names: string[];
 }
 
 export interface PostId {

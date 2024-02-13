@@ -19,6 +19,7 @@ const Home = async () => {
   let userProfile;
 
   const { data: posts } = await supabase.rpc("get_posts");
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
