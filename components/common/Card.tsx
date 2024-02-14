@@ -5,7 +5,7 @@ import { Post } from "../../types/types";
 import { formateDate } from "../../utils/formatDate";
 
 const Card = (post: Post) => {
-  const formattedDate = formateDate(post.created_at);
+  const formattedDate = formateDate(post.createdAt);
   const noImage = "https://picsum.photos/300";
 
   return (
@@ -19,7 +19,7 @@ const Card = (post: Post) => {
       </div>
       <div className="px-6 pt-4 pb-6">
         <ul className="flex flex-wrap gap-1">
-          {post.category_names.map((item, index) => (
+          {post.categoryNames.map((item, index) => (
             <li key={index}>
               <Badge txt={item} />
             </li>
@@ -29,9 +29,9 @@ const Card = (post: Post) => {
           {post.title}
         </h3>
         <AuthorInfo
-          author={post.user_name}
+          author={post.userName}
           createdAt={formattedDate}
-          profileImage={post.profile_image}
+          profileImage={post.profileImage}
         />
         <p className="h-[calc(0.875rem*1.4*3)] mt-4 text-sm shorten3 text-custom-gray-500">
           {post.content.replace(/(<([^>]+)>)/gi, "")}
