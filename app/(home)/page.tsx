@@ -16,32 +16,32 @@ const Home = async () => {
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
   });
+
   let userProfile;
 
   const { data: posts } = await supabase.rpc("get_posts");
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: user } = await supabase.auth.getUser();
 
   if (user) {
-    const { data: userData } = await supabase
-      .from("user")
-      .select("*")
-      .eq("id", user.id);
-
-    userProfile = userData?.[0];
+    const { data: userData, error } = await supabase.rpc("get_user_by_id", {
+      _user_id: user.user.id,
+    });
+    if (error) {
+      console.error(error);
+    } else {
+      userProfile = userData[0];
+    }
   }
 
   return (
     <>
       <Banner type={"home"} />
       <main className="relative flex gap-6 max-width">
-        {user?.id && <SideBar profile={userProfile} />}
+        {user.user.id && <SideBar profile={userProfile} />}
         <ul className={"grid gap-6 grid-cols-3"}>
           {posts.length > 0 &&
             posts.map((post) => (
-              <li key={post.id}>
+              <li key={post.postId}>
                 <Link href={`/post/${post.id}`}>
                   <Card {...post} />
                 </Link>

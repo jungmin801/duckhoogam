@@ -1,7 +1,5 @@
 import React from "react";
 import Badge from "../common/Badge";
-import { cookies } from "next/headers";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Profile } from "../../types/types";
 
 interface ProfileProps {
@@ -10,17 +8,6 @@ interface ProfileProps {
 
 const SideBar = async ({ profile }: ProfileProps) => {
   const ImgBaseURL = process.env.NEXT_PUBLIC_IMAGE_BASEURL;
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({
-    cookies: () => cookieStore,
-  });
-
-  const validCategories = profile.categories.filter((id) => id !== null);
-
-  const { data: categories } = await supabase
-    .from("categories")
-    .select("*")
-    .in("id", validCategories);
 
   return (
     <aside className="h-fit px-6 pt-10 pb-20 text-center bg-white rounded-xl flex-shrink-0 basis-[calc((100%-2.4rem*3)/4)]">
@@ -28,7 +15,7 @@ const SideBar = async ({ profile }: ProfileProps) => {
         About Me
       </h2>
       <img
-        src={ImgBaseURL + profile.image}
+        src={ImgBaseURL + profile.profileImage}
         alt="유저프로필"
         className="inline-block object-cover w-20 h-20 rounded-full"
       />
@@ -40,10 +27,10 @@ const SideBar = async ({ profile }: ProfileProps) => {
         Categories
       </h3>
       <ul className="flex flex-wrap items-center justify-center gap-2.5">
-        {categories?.map((category) => {
+        {profile.categoryNames?.map((category, index) => {
           return (
-            <li key={category.id}>
-              <Badge txt={category.name} />
+            <li key={index}>
+              <Badge txt={category} />
             </li>
           );
         })}
