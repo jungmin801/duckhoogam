@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "../../../utils/supabaseClient";
+import { supabase } from "../../../../utils/supabaseClient";
 
 export async function POST(request: Request) {
   try {
@@ -18,11 +18,10 @@ export async function POST(request: Request) {
 
     if (error) {
       throw new Error(error.message);
-    } else {
-      return NextResponse.json({
-        data: userData.user,
-      });
     }
+    return NextResponse.json({
+      data: userData.user,
+    });
   } catch (error) {
     NextResponse.json({
       error: error,
