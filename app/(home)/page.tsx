@@ -22,7 +22,7 @@ const Home = async () => {
   const { data: posts } = await supabase.rpc("get_posts");
   const { data: user } = await supabase.auth.getUser();
 
-  if (user) {
+  if (user.user !== null) {
     const { data: userData, error } = await supabase.rpc("get_user_by_id", {
       _user_id: user.user.id,
     });
@@ -37,7 +37,7 @@ const Home = async () => {
     <>
       <Banner type={"home"} />
       <main className="relative flex gap-6 max-width">
-        {user.user.id && <SideBar profile={userProfile} />}
+        {user.user?.id && <SideBar profile={userProfile} />}
         <ul className={"grid gap-6 grid-cols-3"}>
           {posts.length > 0 &&
             posts.map((post) => (

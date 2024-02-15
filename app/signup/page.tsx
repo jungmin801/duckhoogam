@@ -22,26 +22,16 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const supabase = createClientComponentClient();
-
   const submitData = async (data: FormValues) => {
     try {
-      const split = data.email.split("@");
-      const accountName = split[0];
-      const { data: userData, error } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
-        options: {
-          data: {
-            accountName: accountName,
-          },
-        },
+      const response = await fetch("/api/auth/signUp", {
+        method: "POST",
+        body: JSON.stringify(data),
       });
+      const resData = await response.json();
 
-      if (error) {
-        throw new Error(error.message);
-      } else {
-        router.push(`/profile/${accountName}`);
+      if (response.status === 200) {
+        router.push(`/profile/${resData.data.user_metadata.accountName}`);
       }
     } catch (error) {
       console.error(error);
