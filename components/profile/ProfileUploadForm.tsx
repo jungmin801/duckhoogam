@@ -5,30 +5,26 @@ import BaseButton from "../buttons/BaseButton";
 import ImgIcon from "../../public/asset/image/icon-image.svg";
 import Select from "../common/Select";
 import { Categories, AccountName } from "../../types/types";
-import { supabase } from "../../utils/supabaseClient";
 import { generateNewFileName } from "../../utils/newFileName";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../utils/supabaseClient";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type ProfileUploadProps = Categories & AccountName;
 
 const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
+  const supabase = createClientComponentClient();
   const router = useRouter();
-  const [userID, setUserID] = useState<string>();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      setUserID(data.user?.id);
-    };
-    getUser();
-  }, []);
 
   const ImgBaseURL = process.env.NEXT_PUBLIC_IMAGE_BASEURL;
   const noProfileImg = process.env.NEXT_PUBLIC_NO_PROFILE_IMAGE_URL;
+
   const defaultStyle =
     "block w-full py-3 border-b border-solid border-custom-gray-300 focus:outline-none font-custom-rg";
   const errorStyle = "border-custom-red";
+
   const [imgUrl, setImgUrl] = useState(ImgBaseURL + noProfileImg);
+
   const {
     register,
     handleSubmit,
@@ -43,6 +39,7 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
   });
 
   const profileImage = watch("image");
+  // 프로필 이미지를 storage에 저장하지 않고 createObjectURL로 화면에 렌더링
   useEffect(() => {
     if (profileImage && profileImage.length > 0) {
       const file = profileImage[0];
@@ -50,6 +47,7 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
     }
   }, [profileImage]);
 
+  // 데이터 제출 시에 이미지를 storage에 저장하는 함수
   const uploadImage = async (file) => {
     const fileName = generateNewFileName(file.name);
     const newFile = new File([file], fileName);
@@ -68,6 +66,7 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
     }
   };
 
+  // 입력한 데이터를 제출하여 프로필 설정하는 함수
   const handleSubmitData = async (submitData) => {
     try {
       let imgPath;
@@ -78,19 +77,20 @@ const ProfileUploadForm = ({ categories, accountName }: ProfileUploadProps) => {
       } else {
         imgPath = noProfileImg;
       }
+
       const response = await fetch(`/api/user/${accountName}`, {
         method: "POST",
         body: JSON.stringify({
           userName: submitData.userName,
           image: imgPath,
           categories: submitData.categories,
-          id: userID,
           intro: submitData.intro,
         }),
       });
 
       const data = await response.json();
-      if (data) {
+
+      if (data.message === "프로필 업데이트 성공") {
         router.push("/");
       }
     } catch (error) {
