@@ -1,34 +1,33 @@
 "use client";
-import React, { useMemo, useRef, Dispatch, SetStateAction } from "react";
+import React, { useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-import { supabase } from "../../utils/supabaseClient";
 import "react-quill/dist/quill.snow.css";
 import "./Editor.css";
+import { supabase } from "../../utils/supabaseClient";
 import { generateNewFileName } from "../../utils/newFileName";
 
-interface SetContentProps {
-  setContent: Dispatch<SetStateAction<string>>;
-}
+const Editor = ({ setValue, trigger }) => {
+  const baseURL = process.env.NEXT_PUBLIC_IMAGE_BASEURL;
+  const contentRef = useRef(null);
 
-const ReactQuill = dynamic(
-  async () => {
-    const { default: RQ } = await import("react-quill");
-    const { default: Resizer } = await import("@botom/quill-resize-module");
-    RQ.Quill.register("modules/resize", Resizer);
-    return function comp({ forwardRef, ...props }) {
-      return <RQ ref={forwardRef} {...props}></RQ>;
-    };
-  },
-  { ssr: false, loading: () => <p>Loading ...</p> }
-);
-
-const Editor = ({ setContent }: SetContentProps) => {
-  const baseURL = process.env.Image_base_url;
-
-  const quillRef = useRef();
   const handleChange = (value: string) => {
-    setContent(value);
+    setValue("content", value);
+    trigger("content");
   };
+
+  const ReactQuill = useMemo(() => {
+    return dynamic(
+      async () => {
+        const { default: RQ } = await import("react-quill");
+        const { default: Resizer } = await import("@botom/quill-resize-module");
+        RQ.Quill.register("modules/resize", Resizer);
+        return function comp({ forwardRef, ...props }) {
+          return <RQ ref={forwardRef} {...props}></RQ>;
+        };
+      },
+      { ssr: false }
+    );
+  }, []);
 
   // 툴바에서 이미지 삽입 버튼을 클릭했을 시 호출하는 함수
   // file를 supabase의 storage에 바로 업로드하고, url을 받아와서 다시 quillRef에 넣어준다.
@@ -50,7 +49,7 @@ const Editor = ({ setContent }: SetContentProps) => {
             .upload(`public/post/${newFile.name}`, newFile);
           if (res.data) {
             const imgUrl = res.data.path;
-            const editor = quillRef.current.getEditor();
+            const editor = contentRef.current.getEditor();
             const range = editor.getSelection(true);
             editor.insertEmbed(range.index, "image", baseURL + imgUrl);
             editor.setSelection(range.index + 1);
@@ -116,8 +115,7 @@ const Editor = ({ setContent }: SetContentProps) => {
 
   return (
     <ReactQuill
-      forwardRef={quillRef}
-      theme="snow"
+      forwardRef={contentRef}
       onChange={handleChange}
       modules={modules}
       formats={formats}
