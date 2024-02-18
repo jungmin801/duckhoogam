@@ -2,7 +2,19 @@
 import React, { useEffect } from "react";
 import BaseButton from "../buttons/BaseButton";
 
-const ConfirmModal = ({ setIsOpen, checkMsg, cancelTxt, confirmTxt }) => {
+interface ConfirmModalProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  checkMsg: string;
+  cancelTxt: string;
+  confirmTxt: string;
+}
+
+const ConfirmModal = ({
+  setIsOpen,
+  checkMsg,
+  cancelTxt,
+  confirmTxt,
+}: ConfirmModalProps) => {
   useEffect(() => {
     document.body.style.cssText = `
           position: fixed; 
