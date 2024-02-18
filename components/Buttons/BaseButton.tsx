@@ -7,6 +7,7 @@ interface BaseButtonProps {
   isFilled: boolean;
   txt: string;
   width?: string;
+  fn?: () => void;
 }
 
 const BaseButton = ({
@@ -15,6 +16,7 @@ const BaseButton = ({
   isFilled,
   txt,
   width,
+  fn,
 }: BaseButtonProps) => {
   const filledStyle = "bg-custom-blue text-white border-custom-blue";
   const outlineStyle = "text-custom-blue border-custom-blue ";
@@ -38,6 +40,7 @@ const BaseButton = ({
       className={`inline-block px-6 py-2.5 rounded-xl font-custom-bd border border-solid ${width} ${
         isFilled ? filledStyle : outlineStyle
       }`}
+      onClick={fn}
     >
       {txt}
     </button>
