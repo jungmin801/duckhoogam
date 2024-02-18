@@ -24,6 +24,7 @@ module.exports = {
           500: "#767676",
           600: "#6F6F6F",
         },
+        "custom-blur": "rgba(0, 0, 0, 0.4)",
       },
       backgroundImage: {
         arrowTop: "url('/asset/image/ArrowTop.png')",

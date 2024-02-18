@@ -84,7 +84,8 @@
   time,
   mark,
   audio,
-  video {
+  video,
+  dialog {
     margin: 0;
     padding: 0;
     border: 0;
