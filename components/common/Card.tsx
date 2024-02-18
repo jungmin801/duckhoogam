@@ -25,7 +25,7 @@ const Card = (post: Post) => {
             </li>
           ))}
         </ul>
-        <h3 className="max-h-[calc(1.125rem*1.4*2)] my-2.5 text-lg font-custom-bd shorten2">
+        <h3 className="max-h-[calc(1.125rem*1.4*2)] my-2.5 text-lg font-bold shorten2">
           {post.title}
         </h3>
         <AuthorInfo
