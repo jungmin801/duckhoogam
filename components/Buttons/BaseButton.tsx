@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 
-interface BaseButtonProps {
+interface BaseButtonProps<T = any> {
   isSubmit?: boolean;
   link?: string;
   isFilled: boolean;
   txt: string;
   width?: string;
-  fn?: () => void;
+  fn?: (data?: T) => void;
 }
 
 const BaseButton = ({

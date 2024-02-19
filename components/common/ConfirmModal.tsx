@@ -1,20 +1,25 @@
 "use client";
 import React, { useEffect } from "react";
 import BaseButton from "../buttons/BaseButton";
+import { NewPost } from "../../types/types";
 
-interface ConfirmModalProps {
+interface ConfirmModalProps<T> {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   checkMsg: string;
   cancelTxt: string;
   confirmTxt: string;
+  fn?: (arg?: T) => Promise<void> | void;
+  fnArgs: T;
 }
 
-const ConfirmModal = ({
+const ConfirmModal = <T,>({
   setIsOpen,
   checkMsg,
   cancelTxt,
   confirmTxt,
-}: ConfirmModalProps) => {
+  fn,
+  fnArgs,
+}: ConfirmModalProps<T>) => {
   useEffect(() => {
     document.body.style.cssText = `
           position: fixed; 
@@ -48,7 +53,17 @@ const ConfirmModal = ({
               txt={cancelTxt}
               fn={() => setIsOpen(false)}
             />
-            <BaseButton isFilled={true} txt={confirmTxt} />
+            <BaseButton
+              isFilled={true}
+              txt={confirmTxt}
+              fn={() => {
+                if (fn && fnArgs !== undefined) {
+                  fn(fnArgs);
+                } else if (fn) {
+                  fn();
+                }
+              }}
+            />
           </div>
         </div>
       </dialog>

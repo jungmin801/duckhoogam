@@ -6,9 +6,14 @@ import Editor from "../../editor/Editor";
 import { Categories } from "../../../types/types";
 import { useForm } from "react-hook-form";
 import ConfirmModal from "../../common/ConfirmModal";
+import { NewPost } from "../../../types/types";
+import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 
 const NewPostForm = ({ categories }: Categories) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [post, setPost] = useState<NewPost>();
+  const router = useRouter();
 
   const {
     register,
@@ -27,13 +32,26 @@ const NewPostForm = ({ categories }: Categories) => {
     mode: "onChange",
   });
 
-  const handleSubmitPost = async (post) => {
+  const handleSubmitPost = (post: NewPost) => {
     setIsOpen(true);
-    // const response = await fetch("/api/post/new", {
-    //   method: "POST",
-    //   body: JSON.stringify(post),
-    // });
+    setPost((prev) => ({
+      ...prev,
+      ...post,
+    }));
   };
+
+  const fetchNewPost = async (post?: NewPost): Promise<void> => {
+    const response = await fetch("/api/post/new", {
+      method: "POST",
+      body: JSON.stringify(post),
+    });
+    const message = await response.json();
+    if (message === "게시글 등록 성공") {
+      router.push("/");
+      router.refresh();
+    }
+  };
+
   return (
     <>
       <form
@@ -86,14 +104,19 @@ const NewPostForm = ({ categories }: Categories) => {
           <BaseButton isSubmit={true} txt={"Submit"} isFilled={true} />
         </div>
       </form>
-      {isOpen && (
-        <ConfirmModal
-          setIsOpen={setIsOpen}
-          checkMsg={"게시글을 등록하시겠습니까?"}
-          cancelTxt={"취소하기"}
-          confirmTxt={"등록하기"}
-        />
-      )}
+      {isOpen &&
+        post &&
+        createPortal(
+          <ConfirmModal<NewPost>
+            setIsOpen={setIsOpen}
+            checkMsg={"게시글을 등록하시겠습니까?"}
+            cancelTxt={"취소하기"}
+            confirmTxt={"등록하기"}
+            fn={fetchNewPost}
+            fnArgs={post}
+          />,
+          document.body
+        )}
     </>
   );
 };
