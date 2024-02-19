@@ -11,9 +11,23 @@ import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 
 const NewPostForm = ({ categories }: Categories) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState<boolean>(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [post, setPost] = useState<NewPost>();
   const router = useRouter();
+
+  const submitPostingModalContent = {
+    main: "게시글을 등록하시겠습니까?",
+    confirm: "Upload",
+    cancel: "Cancel",
+  };
+
+  const CancelPostingModalContent = {
+    main: "글 작성을 취소하시겠습니까?",
+    sub: "작성하신 내용은 저장되지 않습니다.",
+    confirm: "Confirm",
+    cancel: "Cancel",
+  };
 
   const {
     register,
@@ -33,11 +47,15 @@ const NewPostForm = ({ categories }: Categories) => {
   });
 
   const handleSubmitPost = (post: NewPost) => {
-    setIsOpen(true);
+    setIsSubmitModalOpen(true);
     setPost((prev) => ({
       ...prev,
       ...post,
     }));
+  };
+
+  const handleCancel = () => {
+    setIsCancelModalOpen(true);
   };
 
   const fetchNewPost = async (post?: NewPost): Promise<void> => {
@@ -100,20 +118,38 @@ const NewPostForm = ({ categories }: Categories) => {
         </div>
         <Editor setValue={setValue} trigger={trigger} />
         <div className="flex justify-center gap-4 mt-8">
-          <BaseButton isSubmit={false} txt={"Cancel"} isFilled={false} />
+          <BaseButton
+            isSubmit={false}
+            txt={"Cancel"}
+            isFilled={false}
+            fn={() => {
+              handleCancel();
+            }}
+          />
           <BaseButton isSubmit={true} txt={"Submit"} isFilled={true} />
         </div>
       </form>
-      {isOpen &&
+      {isSubmitModalOpen &&
         post &&
         createPortal(
           <ConfirmModal<NewPost>
-            setIsOpen={setIsOpen}
-            checkMsg={"게시글을 등록하시겠습니까?"}
-            cancelTxt={"취소하기"}
-            confirmTxt={"등록하기"}
+            setIsOpen={setIsSubmitModalOpen}
+            content={submitPostingModalContent}
             fn={fetchNewPost}
             fnArgs={post}
+          />,
+          document.body
+        )}
+      {isCancelModalOpen &&
+        post &&
+        createPortal(
+          <ConfirmModal<NewPost>
+            setIsOpen={setIsCancelModalOpen}
+            content={CancelPostingModalContent}
+            fn={() => {
+              router.push("/");
+              router.refresh();
+            }}
           />,
           document.body
         )}
