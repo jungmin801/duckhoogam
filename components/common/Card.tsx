@@ -14,12 +14,12 @@ const Card = (post: Post) => {
         <img
           src={post.thumbnail || noImage}
           alt=""
-          className="object-cover duration-200 ease-in w-100 rounded-t-xl hover:scale-110 "
+          className="object-cover w-full duration-200 ease-in w-100 rounded-t-xl hover:scale-110"
         />
       </div>
       <div className="px-6 pt-4 pb-6">
         <ul className="flex flex-wrap gap-1">
-          {post.categoryNames.map((item, index) => (
+          {post.categoryNames?.map((item, index) => (
             <li key={index}>
               <Badge txt={item} />
             </li>
