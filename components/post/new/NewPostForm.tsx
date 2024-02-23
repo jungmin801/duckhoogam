@@ -46,6 +46,7 @@ const NewPostForm = ({ categories }: Categories) => {
     mode: "onChange",
   });
 
+  // submit버튼 클릭 시에 모달창 팝업
   const handleSubmitPost = (post: NewPost) => {
     setIsSubmitModalOpen(true);
     setPost((prev) => ({
@@ -54,6 +55,7 @@ const NewPostForm = ({ categories }: Categories) => {
     }));
   };
 
+  // 모달창 취소하기 클릭 시 모달창 닫기
   const handleCancel = () => {
     setIsCancelModalOpen(true);
   };
