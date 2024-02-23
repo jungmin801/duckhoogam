@@ -32,6 +32,7 @@ const Home = async () => {
       userProfile = userData[0];
     }
   }
+  console.log(posts);
 
   return (
     <>
@@ -42,7 +43,7 @@ const Home = async () => {
           {posts.length > 0 &&
             posts.map((post) => (
               <li key={post.postId}>
-                <Link href={`/post/${post.id}`}>
+                <Link href={`/post/${post.postId}`}>
                   <Card {...post} />
                 </Link>
               </li>
