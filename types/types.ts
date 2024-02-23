@@ -34,3 +34,9 @@ export interface Profile {
   userName: string;
   intro: string;
 }
+
+export interface NewPost {
+  categories: string[];
+  title: string;
+  content: string | null;
+}
