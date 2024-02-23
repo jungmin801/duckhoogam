@@ -21,15 +21,19 @@ interface PostList {
 
 const PostContents = ({ data }: PostList) => {
   const postData = data[0];
-  const formattedDate = formateDate(postData.created_at);
+  const formattedDate = formateDate(postData.createdAt);
 
   return (
     <div className="w-full max-w-full ">
       <div className="py-5">
-        <AuthorInfo author={postData.userName} createdAt={formattedDate} />
+        <AuthorInfo
+          author={postData.userName}
+          createdAt={formattedDate}
+          profileImage={postData.profileImage}
+        />
       </div>
       <ul className="mt-5 mb-2.5 max-h-14 flex flex-wrap gap-1">
-        {postData.category.map((item: string, index: number) => (
+        {postData.categoryNames.map((item: string, index: number) => (
           <li key={index}>
             <Badge txt={item} />
           </li>
@@ -40,9 +44,7 @@ const PostContents = ({ data }: PostList) => {
         <LikeButton />
       </div>
       <hr className="my-8" />
-      <div>
-        <p>{postData.content}</p>
-      </div>
+      <div dangerouslySetInnerHTML={{ __html: postData.content }}></div>
       <div className="absolute left-0 top-20">
         <BackButton />
       </div>
@@ -64,10 +66,13 @@ const DetailPost: NextPage<Props> = async ({ params }) => {
     cookies: () => cookieStore,
   });
 
-  const { data } = await supabase
-    .from("post")
-    .select("*")
-    .eq("id", params.postId);
+  const { data, error } = await supabase.rpc("get_post_by_id", {
+    _post_id: params.postId,
+  });
+
+  if (error) {
+    console.error(error.message);
+  }
 
   return (
     <>

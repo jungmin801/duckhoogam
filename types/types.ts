@@ -7,6 +7,7 @@ export interface Post {
   userName: string;
   thumbnail: string;
   categoryNames: string[];
+  profileImage: string;
 }
 
 export interface PostId {
