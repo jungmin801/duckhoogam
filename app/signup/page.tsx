@@ -3,6 +3,7 @@ import React from "react";
 import BaseButton from "../../components/buttons/BaseButton";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type FormValues = {
   userName: string;
@@ -89,6 +90,12 @@ const SignUp = () => {
             />
           </div>
         </form>
+        <Link
+          href={"/login"}
+          className="block mt-6 text-sm text-center underline text-custom-gray-400"
+        >
+          로그인 바로가기
+        </Link>
       </div>
     </main>
   );
