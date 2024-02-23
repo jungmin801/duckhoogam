@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { headers, cookies } from "next/headers";
+import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import SignOut from "../auth/signOut/signOut";
 import SignIn from "../auth/signIn/signIn";
