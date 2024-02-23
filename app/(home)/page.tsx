@@ -32,6 +32,7 @@ const Home = async () => {
       userProfile = userData[0];
     }
   }
+  console.log(posts);
 
   return (
     <>
