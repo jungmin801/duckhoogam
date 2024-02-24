@@ -11,6 +11,9 @@ import { Post, PostId } from "../../../types/types";
 import { formateDate } from "../../../utils/formatDate";
 import { NextPage } from "next";
 
+export const validate = 0;
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: PostId;
 }
@@ -69,6 +72,8 @@ const DetailPost: NextPage<Props> = async ({ params }) => {
   const { data, error } = await supabase.rpc("get_post_by_id", {
     _post_id: params.postId,
   });
+
+  console.log(data);
 
   if (error) {
     console.error(error.message);
