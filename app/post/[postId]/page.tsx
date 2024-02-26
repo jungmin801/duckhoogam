@@ -26,6 +26,10 @@ const DetailPost: NextPage<Props> = async ({ params }) => {
     _post_id: params.postId,
   });
 
+  const { data: user } = await supabase.auth.getUser();
+
+  const userId = user.user.id;
+
   if (error) {
     console.error(error.message);
   }
@@ -37,7 +41,7 @@ const DetailPost: NextPage<Props> = async ({ params }) => {
         <div className="max-width">
           <section className="bg-white w-[57rem] max-w-full mt-[-18rem] ml-72 p-20 relative rounded-2xl ">
             {data && data.length > 0 ? (
-              <PostContents data={data} />
+              <PostContents data={data} userId={userId} />
             ) : (
               <NoPostContent />
             )}
