@@ -65,8 +65,8 @@ const NewPostForm = ({ categories }: Categories) => {
       method: "POST",
       body: JSON.stringify(post),
     });
-    const message = await response.json();
-    if (message === "게시글 등록 성공") {
+    const data = await response.json();
+    if (data.message === "게시글 등록 성공") {
       router.push("/");
       router.refresh();
     }
