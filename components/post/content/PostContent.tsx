@@ -53,7 +53,6 @@ export const PostContents = ({ data, userId }: PostContentsProps) => {
   }, [postData.userId, userId]);
 
   // 게시글 삭제 요청
-
   const fetchDeletePost = async () => {
     const response = await fetch(`/api/post/delete/${postData.postId}`, {
       method: "Delete",
@@ -65,6 +64,12 @@ export const PostContents = ({ data, userId }: PostContentsProps) => {
       router.refresh();
     }
   };
+
+  // 수정하기 클릭 시에 게시글 등록 페이지로 이동
+  const moveToNewPost = () => {
+    router.push(`/post/new?id=${postData.postId}`);
+  };
+
   return (
     <div className="w-full max-w-full">
       <div className="py-5">
@@ -98,7 +103,11 @@ export const PostContents = ({ data, userId }: PostContentsProps) => {
       )}
       {isEditModalOpen &&
         createPortal(
-          <ConfirmModal setIsOpen={setIsEditModalOpen} content={editContent} />,
+          <ConfirmModal
+            setIsOpen={setIsEditModalOpen}
+            content={editContent}
+            fn={moveToNewPost}
+          />,
           document.body
         )}
 

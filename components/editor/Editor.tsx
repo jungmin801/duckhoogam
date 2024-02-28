@@ -1,16 +1,22 @@
 "use client";
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import "./Editor.css";
 import { supabase } from "../../utils/supabaseClient";
 import { generateNewFileName } from "../../utils/newFileName";
 
-const Editor = ({ setValue, trigger }) => {
+const Editor = ({ setValue, trigger, initialContent }) => {
+  const [content, setContent] = useState(initialContent);
   const baseURL = process.env.NEXT_PUBLIC_IMAGE_BASEURL;
   const contentRef = useRef(null);
 
+  useEffect(() => {
+    setContent(initialContent);
+  }, [initialContent]);
+
   const handleChange = (value: string) => {
+    setContent(value);
     setValue("content", value);
     trigger("content");
   };
@@ -116,6 +122,7 @@ const Editor = ({ setValue, trigger }) => {
   return (
     <ReactQuill
       forwardRef={contentRef}
+      value={content}
       onChange={handleChange}
       modules={modules}
       formats={formats}

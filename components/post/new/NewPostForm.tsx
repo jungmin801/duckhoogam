@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BaseButton from "../../buttons/BaseButton";
 import Select from "../../common/Select";
 import Editor from "../../editor/Editor";
@@ -7,10 +7,10 @@ import { Categories } from "../../../types/types";
 import { useForm } from "react-hook-form";
 import ConfirmModal from "../../common/ConfirmModal";
 import { NewPost } from "../../../types/types";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { createPortal } from "react-dom";
 
-const NewPostForm = ({ categories }: Categories) => {
+const NewPostForm = ({ categories, postData }) => {
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState<boolean>(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [post, setPost] = useState<NewPost>();
@@ -45,6 +45,12 @@ const NewPostForm = ({ categories }: Categories) => {
     },
     mode: "onChange",
   });
+
+  useEffect(() => {
+    if (postData) {
+      setValue("title", postData.title);
+    }
+  }, [postData, setValue]);
 
   // submit버튼 클릭 시에 모달창 팝업
   const handleSubmitPost = (post: NewPost) => {
@@ -103,6 +109,7 @@ const NewPostForm = ({ categories }: Categories) => {
             control={control}
             name="categories"
             categories={categories}
+            selected={postData.categoryNames}
             rules={{
               validate: () => {
                 return (
@@ -118,7 +125,11 @@ const NewPostForm = ({ categories }: Categories) => {
             </p>
           )}
         </div>
-        <Editor setValue={setValue} trigger={trigger} />
+        <Editor
+          setValue={setValue}
+          trigger={trigger}
+          initialContent={postData.content}
+        />
         <div className="flex justify-center gap-4 mt-8">
           <BaseButton
             isSubmit={false}

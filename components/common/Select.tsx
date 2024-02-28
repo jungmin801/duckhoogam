@@ -1,6 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+"use client";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Category, Categories } from "../../types/types";
-import { useForm, useController } from "react-hook-form";
+import { useController } from "react-hook-form";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface CheckItemsProps {
   checkItems: string[];
@@ -9,13 +11,18 @@ interface CheckItemsProps {
 
 interface SelectProps extends Categories, CheckItemsProps {}
 
-const Select = ({ categories, control, name, rules }) => {
+const Select = ({ categories, control, name, rules, selected }) => {
   const {
     field,
     fieldState: { error },
   } = useController({ control, name, rules });
 
   const [value, setValue] = useState(field.value || []);
+
+  useEffect(() => {
+    setValue(selected);
+  }, [selected]);
+
   const defaultStyle =
     "px-2.5 py-2 text-xs text-center rounded-full w-fit border border-solid border-custom-gray-300 whitespace-nowrap inline-block";
   const checkedStyle =
