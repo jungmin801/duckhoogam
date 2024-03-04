@@ -49,6 +49,7 @@ const NewPostForm = ({ categories, postData }) => {
   useEffect(() => {
     if (postData) {
       setValue("title", postData.title);
+      setValue("content", postData.content);
     }
   }, [postData, setValue]);
 
@@ -69,7 +70,12 @@ const NewPostForm = ({ categories, postData }) => {
   const fetchNewPost = async (post?: NewPost): Promise<void> => {
     const response = await fetch("/api/post/new", {
       method: "POST",
-      body: JSON.stringify(post),
+      body: JSON.stringify({
+        post: {
+          ...post,
+          id: postData.postId,
+        },
+      }),
     });
     const data = await response.json();
     if (data.message === "게시글 등록 성공") {
